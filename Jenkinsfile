@@ -17,20 +17,10 @@ pipeline {
                 bat 'gradlew clean build'
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                bat 'docker-compose build'
-            }
-        }
         stage('Deploy with Docker Compose') {
             steps {
-                bat 'docker-compose up -d'
+                bat 'docker-compose up --build'
             }
-        }
-    }
-    post {
-        always {
-            bat 'docker-compose down'
         }
     }
 }
