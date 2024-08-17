@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     stages {
         stage('Check Docker') {
             steps {
@@ -19,7 +20,7 @@ pipeline {
         }
         stage('Deploy with Docker Compose') {
             steps {
-                bat 'docker-compose up --build'
+                bat 'C:/Program Files/Docker/Docker/resources/bin/docker-compose.exe up --build'
             }
         }
     }
