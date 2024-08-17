@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Check Docker') {
             steps {
-                sh 'docker --version'
+                bat 'docker --version'
             }
         }
 
@@ -14,19 +14,23 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'chmod +x gradlew'
-                sh './gradlew clean build'
+                bat 'gradlew clean build'
             }
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker compose build'
+                bat 'docker-compose build'
             }
         }
         stage('Deploy with Docker Compose') {
             steps {
-                sh 'docker compose up -d'
+                bat 'docker-compose up -d'
             }
+        }
+    }
+    post {
+        always {
+            bat 'docker-compose down'
         }
     }
 }
