@@ -1,7 +1,8 @@
 FROM openjdk:22-jdk
 
-WORKDIR /app
+RUN ./gradlew clean build
 
-COPY app/build/libs/zegel.claim-book-0.0.1-SNAPSHOT.jar /app/zegel.claim-book.jar
+COPY build/libs/zegel.claim-book-0.0.1-SNAPSHOT.jar zegel.claim-book.jar
 
 CMD [ "java", "-jar", "zegel.claim-book.jar" ]
+
