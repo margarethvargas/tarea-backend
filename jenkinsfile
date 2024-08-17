@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Check Docker') {
+            steps {
+                sh 'docker --version'
+            }
+        }
+
         stage('Checkout') {
             steps {
                 git 'https://github.com/margarethvargas/tarea-backend.git'
