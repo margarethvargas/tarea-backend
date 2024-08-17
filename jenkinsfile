@@ -1,12 +1,5 @@
 pipeline {
-    agent {
-        dockerfile true
-    }
-
-    environment {
-        DOCKER_IMAGE = 'claimbook'
-        DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-    }
+    agent any
 
     stages {
         stage('Checkout') {
@@ -16,38 +9,25 @@ pipeline {
         }
         stage('Build') {
             steps {
-                script {
-                    docker.build("${DOCKER_IMAGE}", "-f Dockerfile .")
-                }
+                sh 'chmod +x gradlew'
+                sh './gradlew clean build'
             }
         }
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.image("${DOCKER_IMAGE}").inside {
-                        sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} build'
-                    }
-                }
+                sh 'docker compose build'
             }
         }
         stage('Deploy with Docker Compose') {
             steps {
-                script {
-                    docker.image("${DOCKER_IMAGE}").inside {
-                        sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} up -d'
-                    }
-                }
+                sh 'docker compose up -d'
             }
         }
     }
 
     post {
         always {
-            script {
-                docker.image("${DOCKER_IMAGE}").inside {
-                    sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} down'
-                }
-            }
+            sh 'docker compose down'
         }
     }
 }
