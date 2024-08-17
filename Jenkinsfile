@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Deploy with Docker Compose') {
             steps {
-                bat 'C:/Program Files/Docker/Docker/resources/bin/docker-compose.exe up --build'
+                bat 'docker compose up -d'
             }
         }
     }
