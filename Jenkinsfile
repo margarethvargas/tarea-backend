@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Define any environment variables you might need
         // For example, JAVA_HOME for the JDK installation
-        JAVA_HOME = tool name: 'JDK 22', type: 'jdk'
+        JAVA_HOME = tool name: 'JDK 21', type: 'jdk'
     }
 
     stages {
